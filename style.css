@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #c0d9f5;
+    background: linear-gradient(to right, #5988bd, #2d649b);
     margin: 0;
     padding: 0;
 }
@@ -8,7 +8,7 @@ body {
 .container {
     max-width: 960px;
     margin: 40px auto;
-    background: #dde4eb;
+    background: #c7d5e2;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -53,6 +53,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 button:hover {
@@ -123,4 +124,3 @@ button:hover {
     cursor: pointer;
     text-decoration: underline;
 }
-

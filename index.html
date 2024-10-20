@@ -25,30 +25,36 @@
                 <input type="file" id="profilePicture" accept="image/*" required />
             </div>
 
-            <div class="section">
+            <div class="section" id="education-section">
                 <h2>Education</h2>
-                <label for="education">Education:</label>
-                <input type="text" id="education" required placeholder="Your Education Background" />
+                <div class="education-item">
+                    <input type="text" class="education" required placeholder="Your Education Background" />
+                    <input type="text" class="education-year" required placeholder="Year" />
+                </div>
+                <button type="button" id="add-education-btn">Add More Education</button>
             </div>
 
-            <div class="section">
+            <div class="section" id="experience-section">
                 <h2>Work Experience</h2>
-                <label for="workExperience">Work Experience:</label>
-                <input type="text" id="workExperience" required placeholder="Your Work Experience" />
+                <div class="experience-item">
+                    <input type="text" class="experience" required placeholder="Your Work Experience" />
+                    <input type="text" class="experience-year" required placeholder="Year" />
+                </div>
+                <button type="button" id="add-experience-btn">Add More Experience</button>
             </div>
 
-            <div class="section">
+            <div class="section" id="skills-section">
                 <h2>Skills</h2>
-                <label for="skills">Skills:</label>
-                <input type="text" id="skills" required placeholder="Your Key Skills" />
+                <div class="skills-item">
+                    <input type="text" class="skill" required placeholder="Your Key Skills" />
+                </div>
+                <button type="button" id="add-skill-btn">Add More Skills</button>
             </div>
 
             <button type="submit">Generate Resume</button>
         </form>
 
-        <div id="resume-preview" class="resume-container">
-            
-        </div>
+        <div id="resume-preview" class="resume-container"></div>
     </div>
 
     <script src="script.js"></script>
