@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #5988bd, #2d649b);
+    background: linear-gradient(to right, #303170, #081144);
     margin: 0;
     padding: 0;
 }
@@ -8,7 +8,7 @@ body {
 .container {
     max-width: 960px;
     margin: 40px auto;
-    background: #c7d5e2;
+    background: #8eacca;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -17,6 +17,7 @@ body {
 h1, h2 {
     color: #333;
     text-align: center;
+    text-decoration: underline;
 }
 
 /* Form Styling */
@@ -35,7 +36,7 @@ label {
 }
 
 input[type="text"], input[type="email"], input[type="tel"], input[type="file"] {
-    width: 100%;
+    width: 98%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
