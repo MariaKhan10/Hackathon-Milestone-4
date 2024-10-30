@@ -1,182 +1,106 @@
-interface PersonalInfo {
-    name: string;
-    email: string;
-    phone: string;
-    profilePicture?: string;
-}
+// Accessing form elements
+const form = document.getElementById("resume-form") as HTMLFormElement;
+const resumePreview = document.getElementById("resume-preview") as HTMLDivElement;
 
-interface Education {
-    education: string;
-    year: string;
-}
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    generateResume();
+});
 
-interface WorkExperience {
-    workExperience: string;
-    year: string;
-}
+function generateResume() {
+    const name = (document.getElementById("name") as HTMLInputElement).value;
+    const email = (document.getElementById("email") as HTMLInputElement).value;
+    const phone = (document.getElementById("phone") as HTMLInputElement).value;
+    const profilePicture = (document.getElementById("profilePicture") as HTMLInputElement).files![0];
+    const address = (document.getElementById("address") as HTMLInputElement).value || "";
+    const profileSummary = (document.getElementById("profileSummary") as HTMLTextAreaElement).value || "";
+    const linkedIn = (document.getElementById("linkedIn") as HTMLInputElement).value || "";
+    const certifications = (document.getElementById("certifications") as HTMLInputElement).value || "";
 
-interface Skills {
-    skills: string[];
-}
-
-let profilePicture: string = ''; // Holds profile picture URL
-
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('resume-form') as HTMLFormElement;
-    const resumePreview = document.getElementById('resume-preview') as HTMLElement;
-    const profilePictureInput = document.getElementById('profilePicture') as HTMLInputElement;
-
-    // Add event listeners for adding more sections
-    document.getElementById('add-education-btn')?.addEventListener('click', addEducation);
-    document.getElementById('add-experience-btn')?.addEventListener('click', addExperience);
-    document.getElementById('add-skill-btn')?.addEventListener('click', addSkill);
-
-    form.addEventListener('submit', (e: Event) => {
-        e.preventDefault();
-
-        const name = (document.getElementById('name') as HTMLInputElement).value;
-        const email = (document.getElementById('email') as HTMLInputElement).value;
-        const phone = (document.getElementById('phone') as HTMLInputElement).value;
-
-        const educationItems = document.querySelectorAll('.education-item');
-        const educationData: Education[] = Array.from(educationItems).map(item => ({
-            education: (item.querySelector('.education') as HTMLInputElement).value,
-            year: (item.querySelector('.education-year') as HTMLInputElement).value,
-        }));
-
-        const experienceItems = document.querySelectorAll('.experience-item');
-        const experienceData: WorkExperience[] = Array.from(experienceItems).map(item => ({
-            workExperience: (item.querySelector('.experience') as HTMLInputElement).value,
-            year: (item.querySelector('.experience-year') as HTMLInputElement).value,
-        }));
-
-        const skillsItems = document.querySelectorAll('.skills-item input');
-        const skillsData: string[] = Array.from(skillsItems).map(item => item.value);
-
-        if (profilePictureInput.files && profilePictureInput.files[0]) {
-            profilePicture = URL.createObjectURL(profilePictureInput.files[0]);
-        }
-
-        if (!name || !email || !phone || educationData.length === 0 || experienceData.length === 0 || skillsData.length === 0) {
-            alert("Please fill in all required fields.");
-            return;
-        }
-
-        const personalInfo: PersonalInfo = {
-            name,
-            email,
-            phone,
-            profilePicture
+    // Collecting dynamically added education, experience, and skills
+    const educationItems = Array.from(document.querySelectorAll(".education-item")).map((item) => {
+        return {
+            education: (item.querySelector(".education") as HTMLInputElement).value,
+            year: (item.querySelector(".education-year") as HTMLInputElement).value,
         };
-
-        generateResume(personalInfo, educationData, experienceData, skillsData);
     });
 
-    function generateResume(
-        personalInfo: PersonalInfo,
-        education: Education[],
-        workExperience: WorkExperience[],
-        skills: string[]
-    ) {
-        const educationHtml = education.map(e => `<p>${e.education} (${e.year})</p>`).join('');
-        const experienceHtml = workExperience.map(e => `<p>${e.workExperience} (${e.year})</p>`).join('');
-        const skillsHtml = skills.map(s => `<p>${s}</p>`).join('');
+    const experienceItems = Array.from(document.querySelectorAll(".experience-item")).map((item) => {
+        return {
+            experience: (item.querySelector(".experience") as HTMLInputElement).value,
+            year: (item.querySelector(".experience-year") as HTMLInputElement).value,
+        };
+    });
 
-        resumePreview.innerHTML = `
-            <div class="resume-header">
-                ${personalInfo.profilePicture ? `<img id="profile-img" src="${personalInfo.profilePicture}" alt="Profile Picture">` : ''}
-                <h3 contenteditable="true">${personalInfo.name}</h3>
-                <span id="edit-profile-picture">Change Picture</span>
-            </div>
-            <div class="resume-section">
-                <p><strong>Email:</strong> <span contenteditable="true" id="editable-email">${personalInfo.email}</span></p>
-                <p><strong>Phone:</strong> <span contenteditable="true" id="editable-phone">${personalInfo.phone}</span></p>
-            </div>
-            <div class="resume-section">
-                <h4>Education</h4>
-                ${educationHtml}
-            </div>
-            <div class="resume-section">
-                <h4>Work Experience</h4>
-                ${experienceHtml}
-            </div>
-            <div class="resume-section">
-                <h4>Skills</h4>
-                ${skillsHtml}
-            </div>
-            <button id="generate-new-cv-btn">Generate New CV</button>
-        `;
-        
-        addEventListeners();
+    const skillItems = Array.from(document.querySelectorAll(".skills-item")).map((item) => {
+        return (item.querySelector(".skill") as HTMLInputElement).value;
+    });
+
+    // Display resume details
+    resumePreview.innerHTML = `
+        <div class="resume" style="text-align: left; margin: 0;">
+            <h3>${name}</h3>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            ${address ? `<p><strong>Address:</strong> ${address}</p>` : ""}
+            ${profileSummary ? `<p><strong>Profile Summary:</strong> ${profileSummary}</p>` : ""}
+            ${linkedIn ? `<p><strong>LinkedIn:</strong> <a href="${linkedIn}" target="_blank">${linkedIn}</a></p>` : ""}
+            ${certifications ? `<p><strong>Certifications:</strong> ${certifications}</p>` : ""}
+            <h3>Education</h3>
+            <ul>${educationItems.map((edu) => `<li>${edu.education} - ${edu.year}</li>`).join("")}</ul>
+            <h3>Experience</h3>
+            <ul>${experienceItems.map((exp) => `<li>${exp.experience} - ${exp.year}</li>`).join("")}</ul>
+            <h3>Skills</h3>
+            <ul>${skillItems.map((skill) => `<li>${skill}</li>`).join("")}</ul>
+        </div>
+    `;
+
+    // Display profile picture if uploaded
+    if (profilePicture) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const imageUrl = event.target?.result as string;
+            const imageElement = document.createElement("img");
+            imageElement.src = imageUrl;
+            imageElement.alt = "Profile Picture";
+            imageElement.style.width = "100px"; // Set profile picture size
+            imageElement.style.height = "100px";
+            imageElement.style.borderRadius = "50%";
+            imageElement.style.objectFit = "cover";
+            imageElement.style.marginBottom = "10px"; // Add spacing between image and content
+            resumePreview.insertBefore(imageElement, resumePreview.firstChild);
+        };
+        reader.readAsDataURL(profilePicture);
     }
+}
 
-    function addEventListeners() {
-        const generateNewCVBtn = document.getElementById('generate-new-cv-btn') as HTMLButtonElement;
-        const editProfilePictureBtn = document.getElementById('edit-profile-picture') as HTMLSpanElement;
-        const profileImg = document.getElementById('profile-img') as HTMLImageElement;
+// Add dynamic fields
+document.getElementById("add-education-btn")?.addEventListener("click", function () {
+    const educationSection = document.getElementById("education-section") as HTMLDivElement;
+    const newEducationItem = document.createElement("div");
+    newEducationItem.classList.add("education-item");
+    newEducationItem.innerHTML = `
+        <input type="text" class="education" placeholder="Your Education Background" required />
+        <input type="text" class="education-year" placeholder="Year" required />
+    `;
+    educationSection.appendChild(newEducationItem);
+});
 
-        generateNewCVBtn.addEventListener('click', () => {
-            generateNewCV();
-        });
+document.getElementById("add-experience-btn")?.addEventListener("click", function () {
+    const experienceSection = document.getElementById("experience-section") as HTMLDivElement;
+    const newExperienceItem = document.createElement("div");
+    newExperienceItem.classList.add("experience-item");
+    newExperienceItem.innerHTML = `
+        <input type="text" class="experience" placeholder="Your Work Experience" required />
+        <input type="text" class="experience-year" placeholder="Year" required />
+    `;
+    experienceSection.appendChild(newExperienceItem);
+});
 
-        editProfilePictureBtn.addEventListener('click', () => {
-            profilePictureInput.click();
-            profilePictureInput.addEventListener('change', handleProfilePictureChange);
-        });
-
-        profileImg?.addEventListener('click', () => {
-            profilePictureInput.click();
-            profilePictureInput.addEventListener('change', handleProfilePictureChange);
-        });
-    }
-
-    function handleProfilePictureChange() {
-        if (profilePictureInput.files && profilePictureInput.files[0]) {
-            profilePicture = URL.createObjectURL(profilePictureInput.files[0]);
-            const profileImg = document.getElementById('profile-img') as HTMLImageElement;
-            profileImg.src = profilePicture;
-        }
-    }
-
-    function generateNewCV() {
-        form.reset();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        resumePreview.innerHTML = '';
-        profilePicture = '';
-    }
-
-    function addEducation() {
-        const educationSection = document.getElementById('education-section') as HTMLElement;
-        const educationItem = document.createElement('div');
-        educationItem.classList.add('education-item');
-        educationItem.innerHTML = `
-            <input type="text" class="education" required placeholder="Your Education Background" />
-            <input type="text" class="education-year" required placeholder="Year" />
-        `;
-        educationSection.insertBefore(educationItem, document.getElementById('add-education-btn'));
-    }
-
-    function addExperience() {
-        const experienceSection = document.getElementById('experience-section') as HTMLElement;
-        const experienceItem = document.createElement('div');
-        experienceItem.classList.add('experience-item');
-        experienceItem.innerHTML = `
-            <input type="text" class="experience" required placeholder="Your Work Experience" />
-            <input type="text" class="experience-year" required placeholder="Year" />
-        `;
-        experienceSection.insertBefore(experienceItem, document.getElementById('add-experience-btn'));
-    }
-
-    function addSkill() {
-        const skillsSection = document.getElementById('skills-section') as HTMLElement;
-        const skillItem = document.createElement('div');
-        skillItem.classList.add('skills-item');
-        skillItem.innerHTML = `
-            <input type="text" class="skill" required placeholder="Your Key Skills" />
-        `;
-        skillsSection.insertBefore(skillItem, document.getElementById('add-skill-btn'));
-    }
+document.getElementById("add-skill-btn")?.addEventListener("click", function () {
+    const skillsSection = document.getElementById("skills-section") as HTMLDivElement;
+    const newSkillItem = document.createElement("div");
+    newSkillItem.classList.add("skills-item");
+    newSkillItem.innerHTML = `<input type="text" class="skill" placeholder="Your Key Skills" required />`;
+    skillsSection.appendChild(newSkillItem);
 });

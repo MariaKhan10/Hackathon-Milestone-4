@@ -1,148 +1,243 @@
-/* Reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(120deg, #3a3d6b, #28324e);
-    color: #2c3e50;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+  font-family: 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
 .container {
-    max-width: 960px;
-    margin: 2rem;
-    background: #e4e9f0;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  max-width: 960px;
+  margin: 40px auto;
+  background: #f4f5f7; /* Softer white for a cleaner look */
+  padding: 40px; /* Increased padding for better spacing */
+  border-radius: 12px; /* Increased radius for a modern look */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Stronger box shadow */
 }
 
 h1 {
-    font-size: 2.5rem;
-    color: #007bff;
-    text-align: center;
-    font-weight: 700;
+  color: #152c46;
+  text-align: center;
+  background: linear-gradient(to right, #1e90ff, #00bfff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 3rem; /* Slightly larger for impact */
 }
 
 h2 {
-    color: #007bff;
-    font-size: 1.5rem;
-    margin: 1.5rem 0 1rem;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 0.5rem;
+  color: #007bff;
+  text-align: center;
+  font-size: 1.75rem;
+  margin-bottom: 25px; /* More spacing for better visual separation */
+  text-decoration: underline;
 }
 
 label {
-    display: block;
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: #2c3e50;
-    font-weight: 500;
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1rem; /* Increased font size for better readability */
 }
 
 input[type="text"],
 input[type="email"],
 input[type="tel"],
+input[type="url"],
+textarea,
 input[type="file"] {
-    width: 100%;
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-    border: 1px solid #dfe6e9;
-    border-radius: 5px;
-    font-size: 1rem;
-    color: #2c3e50;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #06141a;
+  border-radius: 5px;
 }
 
-input[type="text"]::placeholder,
-input[type="email"]::placeholder,
-input[type="tel"]::placeholder {
-    color: #b2bec3;
+input:focus {
+  border-color: #1e90ff; /* Highlight color */
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.2); /* Subtle shadow on focus */
+  outline: none;
+}
+
+input[type="text"]:hover, input[type="email"]:hover, input[type="tel"]:hover, input[type="file"]:hover {
+  border-color: #1e90ff;
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.2);
+}
+
+textarea {
+  resize: vertical;
 }
 
 button {
-    display: inline-block;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    margin-top: 1rem;
+  display: inline-block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #283593;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 1rem;
 }
 
 button:hover {
-    background-color: #0056b3;
+  background-color: #1a237e;
 }
 
 /* Form Buttons */
 #add-education-btn, #add-experience-btn, #add-skill-btn {
-    width: auto;
-    padding: 0.5rem 1rem;
-    background-color: #34495e;
-    color: white;
-    font-size: 0.9rem;
-    border-radius: 5px;
-    margin-top: 1rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  width: auto;
+  padding: 0.5rem 1rem;
+  background-color: #34495e;
+  color: white;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 #add-education-btn:hover, #add-experience-btn:hover, #add-skill-btn:hover {
-    background-color: #2c3e50;
+  background-color: #2c3e50;
 }
 
 /* Resume Container */
 .resume-container {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    border: 1px solid #dcdde1;
-    border-radius: 8px;
-    background-color: #f5f6fa;
-    font-family: 'Roboto', sans-serif;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #dcdde1;
+  border-radius: 8px;
+  background-color: #f5f6fa;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Container */
+.container {
+  width: 90%;         /* Adjusts to nearly full screen width */
+  max-width: 1200px;  /* Caps at a professional layout width */
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f7f8fa;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Picture */
+.resume-header img {
+  width: 100px;       /* Sets profile picture to a smaller, professional size */
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+
+
+/* Form Styling */
+.form {
+  margin: 30px 0; /* Increased spacing */
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+
+
+
+/* Resume Styling */
+.resume-container {
+  margin-top: 40px;
+  padding: 30px; /* Increased padding for better spacing */
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  background-color: #f1f9ff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Stronger box shadow */
 }
 
 .resume-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
+
 .resume-header img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 1rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-right: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* More prominent shadow */
 }
 
 .resume-header h3 {
-    font-size: 1.75rem;
-    color: #007bff;
-}
-
-.resume-section {
-    margin-top: 1rem;
+  font-size: 2.5rem;
+  margin: 0;
+  color: #007bff;
+  background: linear-gradient(to right, #7d8c9b, #00bfff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .resume-section h4 {
-    font-size: 1.25rem;
-    color: #34495e;
-    margin-bottom: 0.5rem;
-    border-bottom: 1px solid #dcdde1;
-    padding-bottom: 0.5rem;
+  font-size: 20px;
+  color: #007bff;
+  border-bottom: 2px solid #00bfff;
+  padding-bottom: 5px;
+  margin-bottom: 15px; /* Increased margin for better separation */
 }
 
 .resume-section p {
-    font-size: 1rem;
-    color: #636e72;
+  margin: 8px 0;
+  color: #555;
+}
+
+/* Editable Content Styling */
+[contenteditable="true"] {
+  background-color: #f4f4f4;
+  border: 1px dashed #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: text;
+}
+
+/* Placeholder for Profile Picture Upload */
+input[type="file"]::before {
+  content: 'Upload Profile Picture';
+  display: block;
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Style for dynamically added items */
+#education-section .education-item, #experience-section .experience-item, #skills-section .skills-item {
+  margin-bottom: 15px; /* Increased margin for better separation */
+}
+
+/* Button Styles */
+button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #1e90ff, #00bfff);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px; /* More rounded */
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+button:hover {
+    background: linear-gradient(to right, #00bfff, #1e90ff);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
 }

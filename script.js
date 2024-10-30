@@ -1,103 +1,76 @@
-var profilePicture = ''; // Holds profile picture URL
-document.addEventListener('DOMContentLoaded', function () {
-    var _a, _b, _c;
-    var form = document.getElementById('resume-form');
-    var resumePreview = document.getElementById('resume-preview');
-    var profilePictureInput = document.getElementById('profilePicture');
-    // Add event listeners for adding more sections
-    (_a = document.getElementById('add-education-btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', addEducation);
-    (_b = document.getElementById('add-experience-btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', addExperience);
-    (_c = document.getElementById('add-skill-btn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', addSkill);
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
-        var phone = document.getElementById('phone').value;
-        var educationItems = document.querySelectorAll('.education-item');
-        var educationData = Array.from(educationItems).map(function (item) { return ({
-            education: item.querySelector('.education').value,
-            year: item.querySelector('.education-year').value,
-        }); });
-        var experienceItems = document.querySelectorAll('.experience-item');
-        var experienceData = Array.from(experienceItems).map(function (item) { return ({
-            workExperience: item.querySelector('.experience').value,
-            year: item.querySelector('.experience-year').value,
-        }); });
-        var skillsItems = document.querySelectorAll('.skills-item input');
-        var skillsData = Array.from(skillsItems).map(function (item) { return item.value; });
-        if (profilePictureInput.files && profilePictureInput.files[0]) {
-            profilePicture = URL.createObjectURL(profilePictureInput.files[0]);
-        }
-        if (!name || !email || !phone || educationData.length === 0 || experienceData.length === 0 || skillsData.length === 0) {
-            alert("Please fill in all required fields.");
-            return;
-        }
-        var personalInfo = {
-            name: name,
-            email: email,
-            phone: phone,
-            profilePicture: profilePicture
+var _a, _b, _c;
+// Accessing form elements
+var form = document.getElementById("resume-form");
+var resumePreview = document.getElementById("resume-preview");
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    generateResume();
+});
+function generateResume() {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+    var profilePicture = document.getElementById("profilePicture").files[0];
+    var address = document.getElementById("address").value || "";
+    var profileSummary = document.getElementById("profileSummary").value || "";
+    var linkedIn = document.getElementById("linkedIn").value || "";
+    var certifications = document.getElementById("certifications").value || "";
+    // Collecting dynamically added education, experience, and skills
+    var educationItems = Array.from(document.querySelectorAll(".education-item")).map(function (item) {
+        return {
+            education: item.querySelector(".education").value,
+            year: item.querySelector(".education-year").value,
         };
-        generateResume(personalInfo, educationData, experienceData, skillsData);
     });
-    function generateResume(personalInfo, education, workExperience, skills) {
-        var educationHtml = education.map(function (e) { return "<p>".concat(e.education, " (").concat(e.year, ")</p>"); }).join('');
-        var experienceHtml = workExperience.map(function (e) { return "<p>".concat(e.workExperience, " (").concat(e.year, ")</p>"); }).join('');
-        var skillsHtml = skills.map(function (s) { return "<p>".concat(s, "</p>"); }).join('');
-        resumePreview.innerHTML = "\n            <div class=\"resume-header\">\n                ".concat(personalInfo.profilePicture ? "<img id=\"profile-img\" src=\"".concat(personalInfo.profilePicture, "\" alt=\"Profile Picture\">") : '', "\n                <h3 contenteditable=\"true\">").concat(personalInfo.name, "</h3>\n                <span id=\"edit-profile-picture\">Change Picture</span>\n            </div>\n            <div class=\"resume-section\">\n                <p><strong>Email:</strong> <span contenteditable=\"true\" id=\"editable-email\">").concat(personalInfo.email, "</span></p>\n                <p><strong>Phone:</strong> <span contenteditable=\"true\" id=\"editable-phone\">").concat(personalInfo.phone, "</span></p>\n            </div>\n            <div class=\"resume-section\">\n                <h4>Education</h4>\n                ").concat(educationHtml, "\n            </div>\n            <div class=\"resume-section\">\n                <h4>Work Experience</h4>\n                ").concat(experienceHtml, "\n            </div>\n            <div class=\"resume-section\">\n                <h4>Skills</h4>\n                ").concat(skillsHtml, "\n            </div>\n            <button id=\"generate-new-cv-btn\">Generate New CV</button>\n        ");
-        addEventListeners();
+    var experienceItems = Array.from(document.querySelectorAll(".experience-item")).map(function (item) {
+        return {
+            experience: item.querySelector(".experience").value,
+            year: item.querySelector(".experience-year").value,
+        };
+    });
+    var skillItems = Array.from(document.querySelectorAll(".skills-item")).map(function (item) {
+        return item.querySelector(".skill").value;
+    });
+    // Display resume details
+    resumePreview.innerHTML = "\n        <div class=\"resume\" style=\"text-align: left; margin: 0;\">\n            <h2>".concat(name, "</h2>\n            <p><strong>Email:</strong> ").concat(email, "</p>\n            <p><strong>Phone:</strong> ").concat(phone, "</p>\n            ").concat(address ? "<p><strong>Address:</strong> ".concat(address, "</p>") : "", "\n            ").concat(profileSummary ? "<p><strong>Profile Summary:</strong> ".concat(profileSummary, "</p>") : "", "\n            ").concat(linkedIn ? "<p><strong>LinkedIn:</strong> <a href=\"".concat(linkedIn, "\" target=\"_blank\">").concat(linkedIn, "</a></p>") : "", "\n            ").concat(certifications ? "<p><strong>Certifications:</strong> ".concat(certifications, "</p>") : "", "\n            <h3>Education</h3>\n            <ul>").concat(educationItems.map(function (edu) { return "<li>".concat(edu.education, " - ").concat(edu.year, "</li>"); }).join(""), "</ul>\n            <h3>Experience</h3>\n            <ul>").concat(experienceItems.map(function (exp) { return "<li>".concat(exp.experience, " - ").concat(exp.year, "</li>"); }).join(""), "</ul>\n            <h3>Skills</h3>\n            <ul>").concat(skillItems.map(function (skill) { return "<li>".concat(skill, "</li>"); }).join(""), "</ul>\n        </div>\n    ");
+    // Display profile picture if uploaded
+    if (profilePicture) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var _a;
+            var imageUrl = (_a = event.target) === null || _a === void 0 ? void 0 : _a.result;
+            var imageElement = document.createElement("img");
+            imageElement.src = imageUrl;
+            imageElement.alt = "Profile Picture";
+            imageElement.style.width = "100px"; // Set profile picture size
+            imageElement.style.height = "100px";
+            imageElement.style.borderRadius = "50%";
+            imageElement.style.objectFit = "cover";
+            imageElement.style.marginBottom = "10px"; // Add spacing between image and content
+            resumePreview.insertBefore(imageElement, resumePreview.firstChild);
+        };
+        reader.readAsDataURL(profilePicture);
     }
-    function addEventListeners() {
-        var generateNewCVBtn = document.getElementById('generate-new-cv-btn');
-        var editProfilePictureBtn = document.getElementById('edit-profile-picture');
-        var profileImg = document.getElementById('profile-img');
-        generateNewCVBtn.addEventListener('click', function () {
-            generateNewCV();
-        });
-        editProfilePictureBtn.addEventListener('click', function () {
-            profilePictureInput.click();
-            profilePictureInput.addEventListener('change', handleProfilePictureChange);
-        });
-        profileImg === null || profileImg === void 0 ? void 0 : profileImg.addEventListener('click', function () {
-            profilePictureInput.click();
-            profilePictureInput.addEventListener('change', handleProfilePictureChange);
-        });
-    }
-    function handleProfilePictureChange() {
-        if (profilePictureInput.files && profilePictureInput.files[0]) {
-            profilePicture = URL.createObjectURL(profilePictureInput.files[0]);
-            var profileImg = document.getElementById('profile-img');
-            profileImg.src = profilePicture;
-        }
-    }
-    function generateNewCV() {
-        form.reset();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        resumePreview.innerHTML = '';
-        profilePicture = '';
-    }
-    function addEducation() {
-        var educationSection = document.getElementById('education-section');
-        var educationItem = document.createElement('div');
-        educationItem.classList.add('education-item');
-        educationItem.innerHTML = "\n            <input type=\"text\" class=\"education\" required placeholder=\"Your Education Background\" />\n            <input type=\"text\" class=\"education-year\" required placeholder=\"Year\" />\n        ";
-        educationSection.insertBefore(educationItem, document.getElementById('add-education-btn'));
-    }
-    function addExperience() {
-        var experienceSection = document.getElementById('experience-section');
-        var experienceItem = document.createElement('div');
-        experienceItem.classList.add('experience-item');
-        experienceItem.innerHTML = "\n            <input type=\"text\" class=\"experience\" required placeholder=\"Your Work Experience\" />\n            <input type=\"text\" class=\"experience-year\" required placeholder=\"Year\" />\n        ";
-        experienceSection.insertBefore(experienceItem, document.getElementById('add-experience-btn'));
-    }
-    function addSkill() {
-        var skillsSection = document.getElementById('skills-section');
-        var skillItem = document.createElement('div');
-        skillItem.classList.add('skills-item');
-        skillItem.innerHTML = "\n            <input type=\"text\" class=\"skill\" required placeholder=\"Your Key Skills\" />\n        ";
-        skillsSection.insertBefore(skillItem, document.getElementById('add-skill-btn'));
-    }
+}
+// Add dynamic fields
+(_a = document.getElementById("add-education-btn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
+    var educationSection = document.getElementById("education-section");
+    var newEducationItem = document.createElement("div");
+    newEducationItem.classList.add("education-item");
+    newEducationItem.innerHTML = "\n        <input type=\"text\" class=\"education\" placeholder=\"Your Education Background\" required />\n        <input type=\"text\" class=\"education-year\" placeholder=\"Year\" required />\n    ";
+    educationSection.appendChild(newEducationItem);
+});
+(_b = document.getElementById("add-experience-btn")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
+    var experienceSection = document.getElementById("experience-section");
+    var newExperienceItem = document.createElement("div");
+    newExperienceItem.classList.add("experience-item");
+    newExperienceItem.innerHTML = "\n        <input type=\"text\" class=\"experience\" placeholder=\"Your Work Experience\" required />\n        <input type=\"text\" class=\"experience-year\" placeholder=\"Year\" required />\n    ";
+    experienceSection.appendChild(newExperienceItem);
+});
+(_c = document.getElementById("add-skill-btn")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", function () {
+    var skillsSection = document.getElementById("skills-section");
+    var newSkillItem = document.createElement("div");
+    newSkillItem.classList.add("skills-item");
+    newSkillItem.innerHTML = "<input type=\"text\" class=\"skill\" placeholder=\"Your Key Skills\" required />";
+    skillsSection.appendChild(newSkillItem);
 });
